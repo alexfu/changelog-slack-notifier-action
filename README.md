@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: CHANGELOG Slack notifier
-        uses: ./.github/actions/changelog_slack_notifier
+        uses: alexfu/changelog-slack-notifier-action@v1
         with:
           title: "New version released!"
           version: v1.0.0
