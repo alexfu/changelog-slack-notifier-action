@@ -11,10 +11,10 @@ class Changelog:
         self.commit_groups = []
 
 def version_header_match(line):
-    return re.search("## \[(v\d\.\d\.\d)\]", line)
+    return re.search("## \[(v\d+\.\d+\.\d+)\]", line)
 
 def change_line_match(line):
-    return re.search("- (.*) \(\[#\d+\]\(.*\)\)", line)
+    return re.search("^- (.*)(\(\[#\d+\]\(.*\)\))?$", line)
 
 def group_header_match(line):
     return re.search("### (.*)", line)
@@ -25,7 +25,7 @@ def process_line(line, changelog):
         group_name = group_header.group(1)
         changelog.commit_groups.append(CommitGroup(group_name))
         return
-    
+
     change_line = change_line_match(line)
     if change_line:
         last_commit_group = changelog.commit_groups[-1]
