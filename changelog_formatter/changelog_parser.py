@@ -14,7 +14,15 @@ def version_header_match(line):
     return re.search("## \[(v\d+\.\d+\.\d+)\]", line)
 
 def change_line_match(line):
-    return re.search("^- (.*)(\(\[#\d+\]\(.*\)\))?$", line)
+    jira_commit_regex = "^- (.*)\(\[.*\]\(.*\)\)$"
+    result = re.search(jira_commit_regex, line)
+    if result:
+        return result.group(1)
+
+    standard_commit_regex = "^- (.*)$"
+    result = re.search(standard_commit_regex, line)
+    if result:
+        return result.group(1)
 
 def group_header_match(line):
     return re.search("### (.*)", line)
@@ -29,8 +37,7 @@ def process_line(line, changelog):
     change_line = change_line_match(line)
     if change_line:
         last_commit_group = changelog.commit_groups[-1]
-        change = change_line.group(1)
-        last_commit_group.commits.append(change)
+        last_commit_group.commits.append(change_line)
         return
 
 def parse(changelog_file):
