@@ -1,10 +1,13 @@
 import { getInput } from '@actions/core';
 import { createReadStream } from 'node:fs';
 import { createInterface } from 'node:readline/promises';
+import { postMessage } from './slack';
 
 // Inputs
 const version = getInput('version');
 const changelogFilePath = getInput('changelog_file_path');
+const slackToken = getInput('slack-token');
+const slackChannel = getInput('slack-channel');
 
 // State
 var consumeLine = false;
@@ -16,8 +19,9 @@ async function main() {
 
   readline.on('line', evaluateLine);
 
-  readline.on('close', () => {
-    console.log(result.join('\n').trim());
+  readline.on('close', async () => {
+    const changelogSnippet = result.join('\n').trim();
+    await postMessage(changelogSnippet, slackToken, slackChannel);
   });
 }
 
