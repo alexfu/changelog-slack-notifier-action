@@ -1,0 +1,12 @@
+{
+  "name": "changelog-slack-notifier-action",
+  "version": "1.0.0",
+  "description": "A GitHub action to post a snippet of your projects CHANGELOG to a Slack channel.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Alex Fu <alexfu@fastmail.com>",
+  "license": "ISC"
+}
