@@ -7,6 +7,9 @@ inputs:
   version:
     description: "The CHANGELOG version entry to use"
     required: true
+  changelog_file_path:
+    description: "The path to the CHANGELOG file"
+    required: true
   slack-token:
     description: "Slack auth token"
     required: true
