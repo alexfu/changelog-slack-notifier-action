@@ -7,6 +7,9 @@ inputs:
   version:
     description: "The CHANGELOG version entry to use"
     required: true
+  changelog-file-path:
+    description: "The path to the CHANGELOG file"
+    required: true
   slack-token:
     description: "Slack auth token"
     required: true
@@ -14,10 +17,5 @@ inputs:
     description: "Slack channel ID to post CHANGELOG to"
     required: true
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.title }}
-    - ${{ inputs.version }}
-    - ${{ inputs.slack-token }}
-    - ${{ inputs.slack-channel }}
+  using: "node20"
+  image: "dist/index.js"
