@@ -7,6 +7,10 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    ignores: ["**/dist/**"],
+    ignores: [
+      "dist/",
+      "*.config.js",
+      "*.config.mjs",
+    ],
   },
 );
