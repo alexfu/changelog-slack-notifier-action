@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "build": "tsc"
+    "package": "ncc build src/index.ts"
   },
   "keywords": [],
   "author": "Alex Fu <alexfu@fastmail.com>",
@@ -16,6 +16,7 @@
     "@jest/globals": "^29.7.0",
     "@slack/types": "^2.11.0",
     "@types/node": "^20.12.7",
+    "@vercel/ncc": "^0.38.1",
     "eslint": "^8.57.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.2",
