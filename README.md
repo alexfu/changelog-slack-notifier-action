@@ -1,10 +1,13 @@
 # CHANGELOG Slack notifier GitHub action
+
 A GitHub action to post a snippet of your projects CHANGELOG to a Slack channel.
 
 ## Requirements
+
 - A CHANGELOG generated with [git-chglog](https://github.com/git-chglog/git-chglog)
 
 ## Usage
+
 In your workflow file...
 
 ```

@@ -12,17 +12,17 @@ const parsers: BlockParser[] = [
     parse: (results) => {
       return [
         {
-          type: 'section',
+          type: "section",
           text: {
-            type: 'mrkdwn',
-            text: `*${results[1]}*`
-          }
+            type: "mrkdwn",
+            text: `*${results[1]}*`,
+          },
         },
         {
-          type: 'divider'
-        }
+          type: "divider",
+        },
       ];
-    }
+    },
   },
   {
     regexp: /^- (.*)/,
@@ -30,22 +30,22 @@ const parsers: BlockParser[] = [
       const elements = parseRichTextElement(results[1]);
       return [
         {
-          type: 'rich_text',
+          type: "rich_text",
           elements: [
             {
-              type: 'rich_text_list',
-              style: 'bullet',
+              type: "rich_text_list",
+              style: "bullet",
               elements: [
                 {
-                  type: 'rich_text_section',
-                  elements: elements
-                }
-              ]
-            }
-          ]
-        }
+                  type: "rich_text_section",
+                  elements: elements,
+                },
+              ],
+            },
+          ],
+        },
       ];
-    }
+    },
   },
 ];
 

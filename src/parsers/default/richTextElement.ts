@@ -1,9 +1,9 @@
 import { RichTextElement } from "@slack/types";
 
 interface RichTextElementParser {
-  regexp: RegExp,
-  parse: (result: RegExpMatchArray) => RichTextElement[]
-};
+  regexp: RegExp;
+  parse: (result: RegExpMatchArray) => RichTextElement[];
+}
 
 const parsers: RichTextElementParser[] = [
   {
@@ -14,18 +14,18 @@ const parsers: RichTextElementParser[] = [
       const linkUrl = result[3];
       return [
         {
-          type: 'text',
-          text: text
+          type: "text",
+          text: text,
         },
         {
-          type: 'link',
+          type: "link",
           url: `${linkUrl}`,
-          text: `(${linkText})`
-        }
+          text: `(${linkText})`,
+        },
       ];
-    }
-  }
-]
+    },
+  },
+];
 
 export function parseRichTextElement(line: string): RichTextElement[] {
   if (line.length == 0) {
@@ -39,8 +39,8 @@ export function parseRichTextElement(line: string): RichTextElement[] {
   }
   return [
     {
-      type: 'text',
-      text: line
-    }
+      type: "text",
+      text: line,
+    },
   ];
 }
