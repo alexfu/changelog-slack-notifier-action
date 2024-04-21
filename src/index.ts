@@ -12,8 +12,8 @@ const slackToken = getInput('slack-token');
 const slackChannel = getInput('slack-channel');
 
 // State
-var consumeLine = false;
-var result: string[] = [];
+let consumeLine = false;
+const result: string[] = [];
 
 async function main() {
   const readStream = createReadStream(changelogFilePath);

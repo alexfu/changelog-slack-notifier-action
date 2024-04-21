@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { parseBlock } from './block';
 
 describe('parseBlock', () => {
-  var line: string;
+  let line: string;
 
   describe('when line is a subheader', () => {
     beforeEach(() => {
