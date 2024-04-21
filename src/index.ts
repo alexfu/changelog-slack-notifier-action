@@ -7,7 +7,7 @@ import { parseChangelog } from './parsers/default';
 // Inputs
 const title = getInput('title');
 const version = getInput('version');
-const changelogFilePath = getInput('changelog_file_path');
+const changelogFilePath = getInput('changelog-file-path');
 const slackToken = getInput('slack-token');
 const slackChannel = getInput('slack-channel');
 

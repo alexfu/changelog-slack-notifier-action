@@ -14,10 +14,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: CHANGELOG Slack notifier
-        uses: alexfu/changelog-slack-notifier-action@v1
+        uses: alexfu/changelog-slack-notifier-action@v2
         with:
           title: "New version released!"
           version: v1.0.0
+          changelog-file-path: ./CHANGELOG.md
           slack-token: xxxx
           slack-channel: xxxx
 ```
