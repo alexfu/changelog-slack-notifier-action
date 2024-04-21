@@ -2,51 +2,67 @@ import { Block, KnownBlock } from "@slack/types";
 import { parseRichTextElement } from "./richTextElement";
 
 interface BlockParser {
-  regexp: RegExp;
-  parse: (results: RegExpMatchArray) => KnownBlock[];
+  parse(line: string): KnownBlock[];
+  test(line: string): boolean
+}
+
+class SubHeaderBlockParser implements BlockParser {
+  regexp = /^### (.*)/;
+
+  parse(line: string): KnownBlock[] {
+    const results = line.match(this.regexp);
+    return [
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*${results[1]}*`,
+        },
+      },
+      {
+        type: "divider",
+      },
+    ];
+  }
+
+  test(line: string): boolean {
+    return this.regexp.test(line);
+  }
+}
+
+class ListItemBlockParser implements BlockParser {
+  regexp = /^- (.*)/;
+
+  parse(line: string): KnownBlock[] {
+    const results = line.match(this.regexp);
+    const elements = parseRichTextElement(results[1]);
+    return [
+      {
+        type: "rich_text",
+        elements: [
+          {
+            type: "rich_text_list",
+            style: "bullet",
+            elements: [
+              {
+                type: "rich_text_section",
+                elements: elements,
+              },
+            ],
+          },
+        ],
+      },
+    ];
+  }
+
+  test(line: string): boolean {
+    return this.regexp.test(line);
+  }
 }
 
 const parsers: BlockParser[] = [
-  {
-    regexp: /^### (.*)/,
-    parse: (results) => {
-      return [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `*${results[1]}*`,
-          },
-        },
-        {
-          type: "divider",
-        },
-      ];
-    },
-  },
-  {
-    regexp: /^- (.*)/,
-    parse: (results) => {
-      const elements = parseRichTextElement(results[1]);
-      return [
-        {
-          type: "rich_text",
-          elements: [
-            {
-              type: "rich_text_list",
-              style: "bullet",
-              elements: [
-                {
-                  type: "rich_text_section",
-                  elements: elements,
-                },
-              ],
-            },
-          ],
-        },
-      ];
-    },
-  },
+  new SubHeaderBlockParser(),
+  new ListItemBlockParser(),
 ];
 
 export function parseBlock(line: string): Block[] {
@@ -55,8 +71,8 @@ export function parseBlock(line: string): Block[] {
   }
 
   for (const parser of parsers) {
-    if (parser.regexp.test(line)) {
-      return parser.parse(line.match(parser.regexp));
+    if (parser.test(line)) {
+      return parser.parse(line);
     }
   }
 
