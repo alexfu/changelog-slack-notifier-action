@@ -1,31 +1,37 @@
 import { RichTextElement } from "@slack/types";
 
 interface RichTextElementParser {
-  regexp: RegExp;
-  parse: (result: RegExpMatchArray) => RichTextElement[];
+  parse(line: string): RichTextElement[];
+  test(line: string): boolean;
 }
 
-const parsers: RichTextElementParser[] = [
-  {
-    regexp: /^(.*)\(\[(.*)\]\((.*)\)\)/,
-    parse: (result) => {
-      const text = result[1];
-      const linkText = result[2];
-      const linkUrl = result[3];
-      return [
-        {
-          type: "text",
-          text: text,
-        },
-        {
-          type: "link",
-          url: `${linkUrl}`,
-          text: `(${linkText})`,
-        },
-      ];
-    },
-  },
-];
+class TextWithLinkParser implements RichTextElementParser {
+  regexp = /^(.*)\(\[(.*)\]\((.*)\)\)/;
+
+  parse(line: string): RichTextElement[] {
+    const result = line.match(this.regexp);
+    const text = result[1];
+    const linkText = result[2];
+    const linkUrl = result[3];
+    return [
+      {
+        type: "text",
+        text: text,
+      },
+      {
+        type: "link",
+        url: `${linkUrl}`,
+        text: `(${linkText})`,
+      },
+    ];
+  }
+
+  test(line: string): boolean {
+    return this.regexp.test(line);
+  }
+}
+
+const parsers: RichTextElementParser[] = [new TextWithLinkParser()];
 
 export function parseRichTextElement(line: string): RichTextElement[] {
   if (line.length == 0) {
@@ -33,8 +39,8 @@ export function parseRichTextElement(line: string): RichTextElement[] {
   }
 
   for (const parser of parsers) {
-    if (parser.regexp.test(line)) {
-      return parser.parse(line.match(parser.regexp));
+    if (parser.test(line)) {
+      return parser.parse(line);
     }
   }
   return [
