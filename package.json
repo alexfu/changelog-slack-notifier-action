@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "lint": "eslint .",
+    "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "package": "ncc build src/index.ts"
   },
