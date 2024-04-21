@@ -17,10 +17,5 @@ inputs:
     description: "Slack channel ID to post CHANGELOG to"
     required: true
 runs:
-  using: "docker"
-  image: "Dockerfile"
-  args:
-    - ${{ inputs.title }}
-    - ${{ inputs.version }}
-    - ${{ inputs.slack-token }}
-    - ${{ inputs.slack-channel }}
+  using: "node20"
+  image: "dist/index.js"
