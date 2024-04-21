@@ -3,7 +3,7 @@ import { parseRichTextElement } from "./richTextElement";
 
 interface BlockParser {
   parse(line: string): KnownBlock[];
-  test(line: string): boolean
+  test(line: string): boolean;
 }
 
 class SubHeaderBlockParser implements BlockParser {
