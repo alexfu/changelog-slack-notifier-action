@@ -33281,11 +33281,12 @@ exports.parseRichTextElement = parseRichTextElement;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.postMessage = void 0;
 const web_api_1 = __nccwpck_require__(431);
-function postMessage(blocks, token, channelId) {
+function postMessage(title, blocks, token, channelId) {
     const client = new web_api_1.WebClient(token);
     return client.chat.postMessage({
         channel: channelId,
         blocks,
+        text: title,
     });
 }
 exports.postMessage = postMessage;
@@ -39612,7 +39613,7 @@ async function main() {
 async function postToSlack() {
     const changelogSnippet = result.join("\n").trim();
     const blocks = (0, default_1.parseChangelog)(changelogSnippet, title);
-    await (0, slack_1.postMessage)(blocks, slackToken, slackChannel);
+    await (0, slack_1.postMessage)(title, blocks, slackToken, slackChannel);
 }
 function evaluateLine(line) {
     if (line.startsWith(`## [${version}] -`)) {
