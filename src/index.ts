@@ -26,7 +26,7 @@ async function main() {
 async function postToSlack() {
   const changelogSnippet = result.join("\n").trim();
   const blocks = parseChangelog(changelogSnippet, title);
-  await postMessage(blocks, slackToken, slackChannel);
+  await postMessage(title, blocks, slackToken, slackChannel);
 }
 
 function evaluateLine(line: string) {
